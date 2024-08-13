@@ -1,0 +1,6 @@
+@Assignment4_LibraryManagementSystem_HostAddress = http://localhost:5003
+
+GET {{Assignment4_LibraryManagementSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
