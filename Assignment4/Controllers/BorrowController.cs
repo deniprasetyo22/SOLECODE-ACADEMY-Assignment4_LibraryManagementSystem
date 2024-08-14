@@ -33,8 +33,17 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             {
                 return BadRequest("Invalid input data. Please check the borrow data");
             }
-            await _borrowService.AddBorrow(borrow);
-            return Ok("Borrow added successfully.");
+            var durationLoanBooks = _configuration.GetValue<int>("MySetting:DurationBookLoans");
+            var maxBookBorrowed = _configuration.GetValue<int>("MySetting:MaxBookBorrowed");
+            var result = await _borrowService.AddBorrow(borrow, durationLoanBooks, maxBookBorrowed);
+            var (isSuccess, message) = await _borrowService.AddBorrow(borrow, durationLoanBooks, maxBookBorrowed);
+
+            if (isSuccess)
+            {
+                return Ok(message);
+            }
+
+            return BadRequest(message);
         }
 
         // GET: api/Borrow
@@ -59,6 +68,25 @@ namespace Assignment4_LibraryManagementSystem.Controllers
                 return NotFound($"User with ID {borrowId} not found.");
             }
             return Ok(borrow);
+        }
+
+        [HttpPut("return/{borrowId}")]
+        public async Task<ActionResult> UpdateBorrow(int borrowId)
+        {
+            if (borrowId <= 0)
+            {
+                return BadRequest("Invalid borrow ID.");
+            }
+            // Memanggil service untuk menangani logika update
+            bool result = await _borrowService.ReturnBook(borrowId);
+            if (result)
+            {
+                return Ok("Borrow record updated successfully.");
+            }
+            else
+            {
+                return NotFound("Borrow record not found.");
+            }
         }
 
         //// PUT: api/Borrow/5
