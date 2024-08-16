@@ -11,36 +11,35 @@ using Assignment4_LibraryManagementSystem.Interfaces;
 
 namespace Assignment4_LibraryManagementSystem.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class BorrowController : ControllerBase
     {
-        private readonly BorrowService _borrowService;
-        private readonly IConfiguration _configuration;
+        private readonly IBorrow _borrowService;
 
-        public BorrowController(BorrowService borrowService, IConfiguration configuration)
+        public BorrowController(IBorrow borrowService)
         {
             _borrowService = borrowService;
-            _configuration = configuration;
         }
 
         // POST: api/Borrow
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Borrow>> AddBorrow([FromBody] Borrow borrow)
+        public async Task<ActionResult> AddBorrow([FromBody] Borrow borrow)
         {
             if (borrow == null)
             {
-                return BadRequest("Invalid input data. Please check the borrow data");
+                return BadRequest("Invalid input data. Please check the borrow data.");
             }
-            var durationLoanBooks = _configuration.GetValue<int>("MySetting:DurationBookLoans");
-            var maxBookBorrowed = _configuration.GetValue<int>("MySetting:MaxBookBorrowed");
-            var result = await _borrowService.AddBorrow(borrow, durationLoanBooks, maxBookBorrowed);
-            var (isSuccess, message) = await _borrowService.AddBorrow(borrow, durationLoanBooks, maxBookBorrowed);
+
+            var (isSuccess, message) = await _borrowService.AddBorrow(borrow);
 
             if (isSuccess)
             {
-                return Ok(message);
+                return Ok(new
+                {
+                    Message = message,
+                    BorrowDetails = borrow
+                });
             }
 
             return BadRequest(message);
@@ -60,28 +59,31 @@ namespace Assignment4_LibraryManagementSystem.Controllers
         {
             if (borrowId <= 0)
             {
-                return BadRequest("Invalid ID. The ID must grather than zero");
+                return BadRequest("Invalid borrow ID. The ID must be greater than zero.");
             }
+
             var borrow = await _borrowService.GetBorrowById(borrowId);
             if (borrow == null)
             {
-                return NotFound($"User with ID {borrowId} not found.");
+                return NotFound($"Borrow record with ID {borrowId} not found.");
             }
+
             return Ok(borrow);
         }
 
+        // PUT: api/Borrow/return/5
         [HttpPut("return/{borrowId}")]
-        public async Task<ActionResult> UpdateBorrow(int borrowId)
+        public async Task<ActionResult> ReturnBook(int borrowId)
         {
             if (borrowId <= 0)
             {
                 return BadRequest("Invalid borrow ID.");
             }
-            // Memanggil service untuk menangani logika update
+
             bool result = await _borrowService.ReturnBook(borrowId);
             if (result)
             {
-                return Ok("Borrow record updated successfully.");
+                return Ok("Book returned successfully.");
             }
             else
             {
@@ -89,19 +91,49 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             }
         }
 
-        //// PUT: api/Borrow/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutBorrow(int id, Borrow borrow)
-        //{
+        [HttpPut("{borrowId}")]
+        public async Task<ActionResult> UpdateBorrow(int borrowId, [FromBody] Borrow updatedBorrow)
+        {
+            if (borrowId <= 0)
+            {
+                return BadRequest("Invalid borrow ID.");
+            }
 
-        //}
+            if (updatedBorrow == null)
+            {
+                return BadRequest("Invalid borrow data.");
+            }
 
-        //// DELETE: api/Borrow/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteBorrow(int id)
-        //{
+            var (isSuccess, message) = await _borrowService.UpdateBorrow(borrowId, updatedBorrow);
 
-        //}
+            if (isSuccess)
+            {
+                return Ok(new
+                {
+                    Message = message,
+                    BorrowDetails = updatedBorrow
+                });
+            }
+
+            return BadRequest(message);
+        }
+
+        [HttpDelete("{borrowId}")]
+        public async Task<ActionResult> DeleteBorrow(int borrowId)
+        {
+            if (borrowId <= 0)
+            {
+                return BadRequest("Invalid borrow ID.");
+            }
+
+            var (isSuccess, message) = await _borrowService.DeleteBorrow(borrowId);
+
+            if (isSuccess)
+            {
+                return Ok(message);
+            }
+
+            return NotFound(message);
+        }
     }
 }

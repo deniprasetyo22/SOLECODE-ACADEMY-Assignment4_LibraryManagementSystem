@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Assignment4.Application\Assignment4.Application.csproj" />
+    <ProjectReference Include="..\Assignment4.Domain\Assignment4.Domain.csproj" />
     <ProjectReference Include="..\Assignment4.Persistence\Assignment4.Persistence.csproj" />
   </ItemGroup>
 

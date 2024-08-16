@@ -1,4 +1,5 @@
-﻿using Assignment4_LibraryManagementSystem.Models;
+﻿using Assignment4_LibraryManagementSystem.Interfaces;
+using Assignment4_LibraryManagementSystem.Models;
 using Assignment4_LibraryManagementSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ namespace Assignment4.Persistence
             services.AddScoped<BookService>();
             services.AddScoped<UserService>();
             services.AddScoped<BorrowService>();
+            services.AddScoped<IBorrow, BorrowService>();
         }
     }
 }

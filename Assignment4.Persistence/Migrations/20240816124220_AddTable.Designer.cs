@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Assignment4.Persistence.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20240814081937_UpdateDateOfReturn")]
-    partial class UpdateDateOfReturn
+    [Migration("20240816124220_AddTable")]
+    partial class AddTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,8 +79,8 @@ namespace Assignment4.Persistence.Migrations
                         .HasColumnType("date")
                         .HasColumnName("dateofborrow");
 
-                    b.Property<DateTime?>("Dateofreturn")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly?>("Dateofreturn")
+                        .HasColumnType("date")
                         .HasColumnName("dateofreturn");
 
                     b.Property<DateOnly?>("Deadlinereturn")
