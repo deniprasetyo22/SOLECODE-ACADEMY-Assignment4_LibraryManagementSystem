@@ -16,7 +16,25 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             _bookService = bookService;
         }
 
-        // POST api/<BookController>
+        /// <summary>
+        /// Adds a new book to the system.
+        /// </summary>
+        /// <remarks>
+        /// Ensure that the book data is not null and that the book details are valid.
+        /// Validate that no book with the same Name or ISBN already exists.
+        ///
+        /// Sample request:
+        ///
+        ///     POST /api/Book
+        ///     {
+        ///        "Title": "The Great Gatsby",
+        ///        "Author": "F. Scott Fitzgerald",
+        ///        "PublicationYear": 1925
+        ///        "ISBN": "9780743273565",
+        ///     }
+        /// </remarks>
+        /// <param name="book">The book to be added.</param>
+        /// <returns>Success message if the book is added successfully or an error message if validation fails.</returns>
         [HttpPost]
         public async Task<IActionResult> AddBook([FromBody] Book book)
         {
@@ -34,7 +52,17 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             return Ok("Book added successfully.");
         }
 
-        // GET: api/<BookController>
+        /// <summary>
+        /// Retrieves a list of all books in the system.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint retrieves all books available in the system.
+        ///
+        /// Sample request:
+        ///
+        ///     GET /api/Book
+        /// </remarks>
+        /// <returns>A list of books.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks()
         {
@@ -42,7 +70,18 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             return Ok(books);
         }
 
-        // GET api/<BookController>/5
+        /// <summary>
+        /// Retrieves a book by its ID.
+        /// </summary>
+        /// <remarks>
+        /// Ensure that the provided book ID is valid (greater than zero).
+        ///
+        /// Sample request:
+        ///
+        ///     GET /api/Book/5
+        /// </remarks>
+        /// <param name="bookId">The ID of the book to be retrieved.</param>
+        /// <returns>Book details if found, otherwise an error message.</returns>
         [HttpGet("{bookId}")]
         public async Task<ActionResult<Book>> GetBookById(int bookId)
         {
@@ -60,7 +99,26 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             return Ok(book);
         }
 
-        // PUT api/<BookController>/5
+        /// <summary>
+        /// Updates an existing book by its ID.
+        /// </summary>
+        /// <remarks>
+        /// Ensure that the book data is not null and that all required fields are provided.
+        /// Validate that the book's name and ISBN are unique.
+        ///
+        /// Sample request:
+        ///
+        ///     PUT /api/Book/5
+        ///     {
+        ///        "Title": "Updated Book Title",
+        ///        "Author": "Updated Author",
+        ///        "PublicationYear": 1925
+        ///        "ISBN": "9780743273565",
+        ///     }
+        /// </remarks>
+        /// <param name="bookId">The ID of the book to be updated.</param>
+        /// <param name="book">The updated book details.</param>
+        /// <returns>Success message if the book is updated successfully or an error message if validation fails.</returns>
         [HttpPut("{bookId}")]
         public async Task<IActionResult> UpdateBook(int bookId, [FromBody] Book book)
         {
@@ -78,7 +136,18 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             return Ok("Book updated successfully.");
         }
 
-        // DELETE api/<BookController>/5
+        /// <summary>
+        /// Deletes a book by its ID.
+        /// </summary>
+        /// <remarks>
+        /// Ensure that the book ID provided is valid.
+        ///
+        /// Sample request:
+        ///
+        ///     DELETE /api/Book/5
+        /// </remarks>
+        /// <param name="bookId">The ID of the book to be deleted.</param>
+        /// <returns>Success message if the book is deleted successfully or an error message if the book is not found.</returns>
         [HttpDelete("{bookId}")]
         public async Task<IActionResult> DeleteBook(int bookId)
         {
@@ -91,4 +160,5 @@ namespace Assignment4_LibraryManagementSystem.Controllers
             return Ok("Book deleted successfully.");
         }
     }
+
 }
