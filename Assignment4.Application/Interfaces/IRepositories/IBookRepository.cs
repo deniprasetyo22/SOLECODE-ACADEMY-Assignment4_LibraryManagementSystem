@@ -1,8 +1,13 @@
 ﻿using Assignment4_LibraryManagementSystem.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Assignment4_LibraryManagementSystem.Interfaces
+namespace Assignment4.Application.Interfaces.IRepositories
 {
-    public interface IBook
+    public interface IBookRepository
     {
         Task<bool> AddBook(Book book);
         Task<IEnumerable<Book>> GetAllBooks();

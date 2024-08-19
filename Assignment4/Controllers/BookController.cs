@@ -1,4 +1,5 @@
-﻿using Assignment4_LibraryManagementSystem.Models;
+﻿using Assignment4.Application.Interfaces.IServices;
+using Assignment4_LibraryManagementSystem.Models;
 using Assignment4_LibraryManagementSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,8 +11,8 @@ namespace Assignment4_LibraryManagementSystem.Controllers
     [ApiController]
     public class BookController : ControllerBase
     {
-        private readonly BookService _bookService;
-        public BookController(BookService bookService)
+        private readonly IBookService _bookService;
+        public BookController(IBookService bookService)
         {
             _bookService = bookService;
         }

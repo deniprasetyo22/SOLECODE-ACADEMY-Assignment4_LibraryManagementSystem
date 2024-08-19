@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Assignment4_LibraryManagementSystem.Models;
@@ -31,11 +32,13 @@ public partial class Borrow
     [NotMapped]
     [ForeignKey("Bookid")]
     [InverseProperty("Borrows")]
+    [JsonIgnore]
     public virtual Book? Book { get; set; }
 
     [NotMapped]
     [ForeignKey("Userid")]
     [InverseProperty("Borrows")]
+    [JsonIgnore]
     public virtual User? User { get; set; }
 
     [NotMapped]

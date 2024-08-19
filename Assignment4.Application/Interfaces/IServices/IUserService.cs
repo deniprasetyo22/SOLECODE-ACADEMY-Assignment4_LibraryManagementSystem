@@ -1,8 +1,8 @@
 ﻿using Assignment4_LibraryManagementSystem.Models;
 
-namespace Assignment4_LibraryManagementSystem.Interfaces
+namespace Assignment4.Application.Interfaces.IServices
 {
-    public interface IUser
+    public interface IUserService
     {
         Task<bool> AddUser(User user);
         Task<IEnumerable<User>> GetAllUsers();

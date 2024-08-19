@@ -1,4 +1,6 @@
-﻿using Assignment4_LibraryManagementSystem.Interfaces;
+﻿using Assignment4.Application.Interfaces.IRepositories;
+using Assignment4.Application.Interfaces.IServices;
+using Assignment4.Persistence.Repositories;
 using Assignment4_LibraryManagementSystem.Models;
 using Assignment4_LibraryManagementSystem.Services;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +20,13 @@ namespace Assignment4.Persistence
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<LibraryContext>(options => options.UseNpgsql(connectionString));
-            services.AddScoped<BookService>();
-            services.AddScoped<UserService>();
-            services.AddScoped<BorrowService>();
-            services.AddScoped<IBorrow, BorrowService>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBorrowService, BorrowService>();
+            services.AddScoped<IBorrowRepository, BorrowRepository>();
+            services.AddControllers();
         }
     }
 }

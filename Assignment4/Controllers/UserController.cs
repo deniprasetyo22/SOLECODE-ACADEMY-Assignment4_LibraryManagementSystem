@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Assignment4_LibraryManagementSystem.Models;
 using Assignment4_LibraryManagementSystem.Services;
 using System.Net;
+using Assignment4.Application.Interfaces.IServices;
 
 namespace Assignment4_LibraryManagementSystem.Controllers
 {
@@ -15,8 +16,8 @@ namespace Assignment4_LibraryManagementSystem.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userService;
-        public UserController(UserService userService)
+        private readonly IUserService _userService;
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }

@@ -1,8 +1,8 @@
 ﻿using Assignment4_LibraryManagementSystem.Models;
 
-namespace Assignment4_LibraryManagementSystem.Interfaces
+namespace Assignment4.Application.Interfaces.IServices
 {
-    public interface IBorrow
+    public interface IBorrowService
     {
         Task<(bool IsSuccess, string Message)> AddBorrow(Borrow borrow);
         Task<IEnumerable<Borrow>> GetAllBorrows();

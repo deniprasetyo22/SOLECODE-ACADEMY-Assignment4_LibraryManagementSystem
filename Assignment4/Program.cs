@@ -57,14 +57,7 @@ builder.Services.AddApiVersioning(option =>
     options.SubstituteApiVersionInUrl = true; //This will help us to resolve the ambiguity when there is a routing conflict due to routing template one or more end points are same.
 });
 
-
-//Using PostgreSQL
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-//builder.Services.AddDbContext<LibraryContext>(options => options.UseNpgsql(connectionString));
-//builder.Services.AddScoped<BookService>();
-//builder.Services.AddScoped<UserService>();
-//builder.Services.AddScoped<BorrowService>();
-
+// Panggil ConfigurePersistence
 builder.Services.ConfigurePersistence(builder.Configuration);
 
 var app = builder.Build();

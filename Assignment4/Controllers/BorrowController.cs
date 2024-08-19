@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Assignment4_LibraryManagementSystem.Models;
 using Assignment4_LibraryManagementSystem.Services;
-using Assignment4_LibraryManagementSystem.Interfaces;
+using Assignment4.Application.Interfaces.IServices;
 
 namespace Assignment4_LibraryManagementSystem.Controllers
 {
@@ -15,8 +9,8 @@ namespace Assignment4_LibraryManagementSystem.Controllers
     [Route("api/[controller]")]
     public class BorrowController : ControllerBase
     {
-        private readonly IBorrow _borrowService;
-        public BorrowController(IBorrow borrowService)
+        private readonly IBorrowService _borrowService;
+        public BorrowController(IBorrowService borrowService)
         {
             _borrowService = borrowService;
         }

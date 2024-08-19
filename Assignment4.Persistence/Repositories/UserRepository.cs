@@ -1,14 +1,18 @@
-﻿using Assignment4_LibraryManagementSystem.Interfaces;
+﻿using Assignment4.Application.Interfaces.IRepositories;
 using Assignment4_LibraryManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Assignment4_LibraryManagementSystem.Services
+namespace Assignment4.Persistence.Repositories
 {
-    public class UserService : IUser
+    public class UserRepository:IUserRepository
     {
         private readonly LibraryContext _context;
-        public UserService(LibraryContext context)
+        public UserRepository(LibraryContext context)
         {
             _context = context;
         }
